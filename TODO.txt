@@ -1,21 +1,20 @@
 Core Technologies
 • Expo: Base framework for React Native development. +
 • Expo Router: For implementing app navigation. +
-• NativeWind: Styling solution.
-• Tanstack Query: To manage async logic and the FFMPEG cropping process.
-• FFMPEG: Core library for video processing.
-• Expo Video: Video rendering and playback (or any suitable alternative).
+• NativeWind: Styling solution. +
+• Expo Video: Video rendering and playback (or any suitable alternative). +
+• Tanstack Query: To manage async logic and the FFMPEG cropping process. +
+• Zustand: State management solution. +
+• FFMPEG: Core library for video processing. <---
 
 Bonus Technologies
 • Expo SQLite: For structured, persistent storage.
 • React Native Reanimated: For animations.
 • Zod/Yup: Validation schemas for form handling
-• Zustand: State management solution.
-
 
 ---
 
-- Add nativewind for styling <---
+- Add ffmpeg pkg 
 - Fix lint and type errors
 - Optimize
 - Test
