@@ -9,7 +9,7 @@ export default function SomeScreen() {
         alignItems: "center",
       }}
     >
-      <Text>Welcome to Croppr!</Text>
+      <Text className="m-2 bg-blue-600 p-4 text-gray-200">Welcome to Croppr!</Text>
     </View>
   );
 }
