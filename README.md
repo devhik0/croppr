@@ -1,5 +1,7 @@
 # Welcome to Croppr app 👋
 
+!Only works for android, not developer for ios because of there is no ios device i had to test on it including mac and iphone
+
 This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
 
 ## Get started

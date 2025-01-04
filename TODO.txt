@@ -61,7 +61,7 @@ Core Technologies
 • Expo Video: Video rendering and playback (or any suitable alternative). +
 • Tanstack Query: To manage async logic and the FFMPEG cropping process. +
 • Zustand: State management solution. +
-• FFMPEG: Core library for video processing. <---
+• FFMPEG: Core library for video processing. +
 
 Bonus Technologies
 • Expo SQLite: For structured, persistent storage.
@@ -97,7 +97,7 @@ Deliverables
 ---
 
 - structure app and build main page <---
-- Add ffmpeg pkg 
+- Add ffmpeg pkg +
 - Fix lint and type errors
 - Optimize
 - Test
