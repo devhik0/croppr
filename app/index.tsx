@@ -17,7 +17,10 @@ export default function Index() {
           data={videos}
           renderItem={({ item }) => (
             <Link
-              href={{ pathname: "/(details)/[name]", params: { name: item.name, description: item.description } }}
+              href={{
+                pathname: "/(details)/[name]",
+                params: { name: item.name, description: item.description, uri: item.uri as string },
+              }}
               asChild
             >
               <Pressable className="m-2 bg-emerald-400 p-2">

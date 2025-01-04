@@ -9,12 +9,17 @@ import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { Alert, Button, SafeAreaView, StyleSheet, Text, TextInput, View } from "react-native";
 
+type FormValues = {
+  name: string;
+  description: string;
+};
+
 export default function CropModal() {
   const [file, setFile] = useState<DocumentPickerResult>();
 
   const findVideos = async () => {
     const data = await getDocumentAsync({ type: "video/*" });
-    console.log("data: ", data.assets?.[0].name);
+    console.log("data: ", data.assets?.[0]);
     setFile(data);
   };
 
@@ -26,11 +31,10 @@ export default function CropModal() {
 
   console.log("file", file?.assets?.[0].name);
 
-  // TODO: send cropped videos to glob store (zustand)
   const addVideo = useVideoStore((state) => state.addVideo);
 
   const cropVideos = async () => {
-    // todo: make here with slider ui
+    // todo: make here with slider ui -----------------------------v---------v
     FFmpegKit.execute(
       `-y -i ${videoSource} -ss 00:00:05 -to 00:00:10 -c copy ${cacheDirectory}output-${file?.assets?.[0].name}.mp4`
     ).then(async (session) => {
@@ -68,13 +72,13 @@ export default function CropModal() {
     },
   });
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (data: FormValues) => {
     mutation.mutate();
     addVideo({
       id: Math.floor(Math.random() * 1000).toString(),
       name: data.name,
       description: data.description,
-      uri: `${cacheDirectory}output-${file?.assets?.[0].name}.mp4`,
+      uri: `${cacheDirectory}output-${file?.assets?.[0].name}`,
     });
 
     console.log(data);
