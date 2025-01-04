@@ -1,13 +1,15 @@
+import { useVideoStore } from "@/store/store";
+import { useMutation } from "@tanstack/react-query";
 import { DocumentPickerResult, getDocumentAsync } from "expo-document-picker";
 import { cacheDirectory } from "expo-file-system";
+import { Link } from "expo-router";
 import { useVideoPlayer, VideoView } from "expo-video";
 import { FFmpegKit, FFmpegKitConfig, ReturnCode } from "ffmpeg-kit-react-native";
 import { useState } from "react";
-import { Alert, Button, SafeAreaView, StyleSheet, Text, View } from "react-native";
+import { Controller, useForm } from "react-hook-form";
+import { Alert, Button, SafeAreaView, StyleSheet, Text, TextInput, View } from "react-native";
 
 export default function CropModal() {
-  const videos = [1, 2, 3, 4];
-
   const [file, setFile] = useState<DocumentPickerResult>();
 
   const findVideos = async () => {
@@ -22,7 +24,10 @@ export default function CropModal() {
     player.loop = true;
   });
 
-  console.log("asf", file?.assets?.[0].name);
+  console.log("file", file?.assets?.[0].name);
+
+  // TODO: send cropped videos to glob store (zustand)
+  const addVideo = useVideoStore((state) => state.addVideo);
 
   const cropVideos = async () => {
     // todo: make here with slider ui
@@ -39,11 +44,40 @@ export default function CropModal() {
         });
         Alert.alert("Info", "Clip success");
       } else if (ReturnCode.isCancel(returnCode)) {
-        // CANCEL
+        Alert.alert("Warn", "Clip cancelled");
       } else {
-        Alert.alert("Error", "Clip fail");
+        Alert.alert("Error", "Clip failed");
       }
     });
+  };
+
+  const mutation = useMutation({
+    mutationFn: () => {
+      return cropVideos();
+    },
+  });
+
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      name: "",
+      description: "",
+    },
+  });
+
+  const onSubmit = async (data) => {
+    mutation.mutate();
+    addVideo({
+      id: Math.floor(Math.random() * 1000).toString(),
+      name: data.name,
+      description: data.description,
+      uri: `${cacheDirectory}output-${file?.assets?.[0].name}.mp4`,
+    });
+
+    console.log(data);
   };
 
   return (
@@ -55,9 +89,36 @@ export default function CropModal() {
 
       <View className="mx-2">
         <VideoView style={styles.video} player={player} allowsFullscreen allowsPictureInPicture />
-        <Text>{videoSource}</Text>
-        <Button title="Crop" onPress={cropVideos} />
+        <View className="mb-2">
+          <Controller
+            control={control}
+            rules={{
+              required: true,
+            }}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <TextInput placeholder="Name" onBlur={onBlur} onChangeText={onChange} value={value} />
+            )}
+            name="name"
+          />
+          {errors.description && <Text>This is required.</Text>}
+          <Controller
+            control={control}
+            rules={{
+              required: true,
+            }}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <TextInput placeholder="Description" onBlur={onBlur} onChangeText={onChange} value={value} multiline />
+            )}
+            name="description"
+          />
+          {errors.description && <Text>This is required.</Text>}
+
+          <Button title="Crop" onPress={handleSubmit(onSubmit)} />
+        </View>
       </View>
+      <Link href={"/"} className="mt-2 bg-blue-400">
+        Back
+      </Link>
     </SafeAreaView>
   );
 }
