@@ -9,7 +9,7 @@ type MyState = {
 
 export const useVideoStore = create<MyState>()(
   persist(
-    (set, get) => ({
+    (set) => ({
       videos: [],
       addVideo: (video) => {
         set((state) => ({

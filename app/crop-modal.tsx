@@ -8,7 +8,7 @@ import { useVideoPlayer, VideoView } from "expo-video";
 import { FFmpegKit, FFmpegKitConfig, ReturnCode } from "ffmpeg-kit-react-native";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { Alert, Button, SafeAreaView, StyleSheet, Text, TextInput, View } from "react-native";
+import { Alert, Button, SafeAreaView, Text, TextInput, View } from "react-native";
 import * as yup from "yup";
 
 type FormValues = {
@@ -36,7 +36,6 @@ export default function CropModal() {
   const addVideo = useVideoStore((state) => state.addVideo);
 
   const cropVideos = async () => {
-    // todo: make here with slider ui -----------------------------v---------v
     FFmpegKit.execute(
       `-y -i ${videoSource} -ss 00:00:05 -to 00:00:10 -c copy ${cacheDirectory}output-${file?.assets?.[0].name}.mp4`
     ).then(async (session) => {
@@ -98,7 +97,7 @@ export default function CropModal() {
       </View>
 
       <View className="mx-2">
-        <VideoView style={styles.video} player={player} allowsFullscreen allowsPictureInPicture />
+        <VideoView style={{ width: 350, height: 275 }} player={player} allowsFullscreen allowsPictureInPicture />
         <View className="mb-2">
           <Controller
             control={control}
@@ -132,21 +131,3 @@ export default function CropModal() {
     </SafeAreaView>
   );
 }
-
-// todo: convert here to tailwind
-const styles = StyleSheet.create({
-  contentContainer: {
-    flex: 1,
-    padding: 10,
-    alignItems: "center",
-    justifyContent: "center",
-    paddingHorizontal: 50,
-  },
-  video: {
-    width: 350,
-    height: 275,
-  },
-  controlsContainer: {
-    padding: 10,
-  },
-});

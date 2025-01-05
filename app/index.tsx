@@ -10,7 +10,6 @@ export default function Index() {
     <SafeAreaProvider>
       <SafeAreaView className="flex-1">
         <Text>Test</Text>
-        {/* //todo: fill here with clips comes from glob store */}
         <Text>Here is your current clips</Text>
 
         <FlatList

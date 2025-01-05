@@ -1,3 +1,5 @@
+- add stepper for crop modal
+- finish styling and ui
 - Fix lint and type errors
 - fix todos
 - Optimize (remove unused pkgs)
