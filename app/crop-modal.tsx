@@ -1,14 +1,17 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { useVideoStore } from "@/store/store";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useMutation } from "@tanstack/react-query";
 import { DocumentPickerResult, getDocumentAsync } from "expo-document-picker";
 import { cacheDirectory } from "expo-file-system";
-import { Link } from "expo-router";
+import { router } from "expo-router";
 import { useVideoPlayer, VideoView } from "expo-video";
 import { FFmpegKit, FFmpegKitConfig, ReturnCode } from "ffmpeg-kit-react-native";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { Alert, Button, SafeAreaView, Text, TextInput, View } from "react-native";
+// @ts-expect-error
+import { ProgressStep, ProgressSteps } from "react-native-progress-steps";
 import * as yup from "yup";
 
 type FormValues = {
@@ -89,45 +92,61 @@ export default function CropModal() {
     console.log(data);
   };
 
+  const onSubmitSteps = () => {
+    router.push("/");
+  };
+
   return (
-    <SafeAreaView>
-      <View className="m-2 p-2">
-        <Text>Select a video to crop</Text>
-        <Button onPress={findVideos} title="Find" />
-      </View>
+    <SafeAreaView className="flex-1">
+      {/* stepper */}
 
-      <View className="mx-2">
-        <VideoView style={{ width: 350, height: 275 }} player={player} allowsFullscreen allowsPictureInPicture />
-        <View className="mb-2">
-          <Controller
-            control={control}
-            rules={{
-              required: true,
-            }}
-            render={({ field: { onChange, onBlur, value } }) => (
-              <TextInput placeholder="Name" onBlur={onBlur} onChangeText={onChange} value={value} />
-            )}
-            name="name"
-          />
-          {errors.description && <Text>This is required.</Text>}
-          <Controller
-            control={control}
-            rules={{
-              required: true,
-            }}
-            render={({ field: { onChange, onBlur, value } }) => (
-              <TextInput placeholder="Description" onBlur={onBlur} onChangeText={onChange} value={value} multiline />
-            )}
-            name="description"
-          />
-          {errors.description && <Text>This is required.</Text>}
+      <ProgressSteps>
+        <ProgressStep label="Find video">
+          <View className="m-2 p-2">
+            <Text>Select a video to crop</Text>
+            <Button onPress={findVideos} title="Find" />
+            <Text>{file?.assets?.[0].name}</Text>
+          </View>
+        </ProgressStep>
+        <ProgressStep label="Crop video">
+          <View style={{ alignItems: "center" }}>
+            <VideoView style={{ width: 350, height: 275 }} player={player} allowsFullscreen allowsPictureInPicture />
+          </View>
+        </ProgressStep>
+        <ProgressStep label="Add information" onSubmit={onSubmitSteps}>
+          <View className="mb-2">
+            <Controller
+              control={control}
+              rules={{
+                required: true,
+              }}
+              render={({ field: { onChange, onBlur, value } }) => (
+                <TextInput placeholder="Name" onBlur={onBlur} onChangeText={onChange} value={value} />
+              )}
+              name="name"
+            />
+            {errors.description && <Text>This is required.</Text>}
+            <Controller
+              control={control}
+              rules={{
+                required: true,
+              }}
+              render={({ field: { onChange, onBlur, value } }) => (
+                <TextInput placeholder="Description" onBlur={onBlur} onChangeText={onChange} value={value} multiline />
+              )}
+              name="description"
+            />
+            {errors.description && <Text>This is required.</Text>}
 
-          <Button title="Crop" onPress={handleSubmit(onSubmit)} />
-        </View>
-      </View>
-      <Link href={"/"} className="mt-2 bg-blue-400">
+            <Button title="Crop" onPress={handleSubmit(onSubmit)} />
+            <Text>{file?.assets?.[0].name}</Text>
+          </View>
+        </ProgressStep>
+      </ProgressSteps>
+
+      {/* <Link href={"/"} className="mt-2 bg-blue-400">
         Back
-      </Link>
+      </Link> */}
     </SafeAreaView>
   );
 }

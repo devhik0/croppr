@@ -13,7 +13,7 @@ export default function Index() {
         <Text>Here is your current clips</Text>
 
         <FlatList
-          data={videos.reverse()}
+          data={videos.toReversed()}
           renderItem={({ item }) => (
             <Link
               href={{
