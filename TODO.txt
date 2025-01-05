@@ -1,4 +1,4 @@
-- add video scrubber <--
 - Fix lint and type errors
+- fix todos
 - Optimize (remove unused pkgs)
-- Test
+- Test apps in every aspect

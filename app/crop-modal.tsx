@@ -1,4 +1,5 @@
 import { useVideoStore } from "@/store/store";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { useMutation } from "@tanstack/react-query";
 import { DocumentPickerResult, getDocumentAsync } from "expo-document-picker";
 import { cacheDirectory } from "expo-file-system";
@@ -8,6 +9,7 @@ import { FFmpegKit, FFmpegKitConfig, ReturnCode } from "ffmpeg-kit-react-native"
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { Alert, Button, SafeAreaView, StyleSheet, Text, TextInput, View } from "react-native";
+import * as yup from "yup";
 
 type FormValues = {
   name: string;
@@ -61,15 +63,19 @@ export default function CropModal() {
     },
   });
 
+  const schema = yup
+    .object({
+      name: yup.string().required(),
+      description: yup.string().required(),
+    })
+    .required();
+
   const {
     control,
     handleSubmit,
     formState: { errors },
   } = useForm({
-    defaultValues: {
-      name: "",
-      description: "",
-    },
+    resolver: yupResolver(schema),
   });
 
   const onSubmit = async (data: FormValues) => {
