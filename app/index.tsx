@@ -14,7 +14,7 @@ export default function Index() {
         <Text>Here is your current clips</Text>
 
         <FlatList
-          data={videos}
+          data={videos.reverse()}
           renderItem={({ item }) => (
             <Link
               href={{
@@ -23,9 +23,10 @@ export default function Index() {
               }}
               asChild
             >
-              <Pressable className="m-2 bg-emerald-400 p-2">
-                <Text>{item.name}</Text>
-                <Text>{item.description}</Text>
+              <Pressable className="m-1 bg-blue-200 p-1">
+                <Text>
+                  {item.name} {item.description}
+                </Text>
               </Pressable>
             </Link>
           )}
