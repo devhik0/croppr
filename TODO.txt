@@ -1,4 +1,4 @@
 - add video scrubber <--
 - Fix lint and type errors
-- Optimize
+- Optimize (remove unused pkgs)
 - Test
