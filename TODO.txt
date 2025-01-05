@@ -1,4 +1,4 @@
 - Fix lint and type errors
 - fix todos
-- Optimize (remove unused pkgs)
+- Optimize (remove unused pkgs, extract components, edit code structure...)
 - Test apps in every aspect
