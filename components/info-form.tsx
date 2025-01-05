@@ -68,7 +68,7 @@ export const InfoForm = ({ fileName, videoSource }: { fileName: string; videoSou
   };
 
   return (
-    <View className="mb-2 p-2">
+    <View style={{ marginBottom: 8, padding: 8 }}>
       <Controller
         control={control}
         rules={{
@@ -76,7 +76,7 @@ export const InfoForm = ({ fileName, videoSource }: { fileName: string; videoSou
         }}
         render={({ field: { onChange, onBlur, value } }) => (
           <TextInput
-            className="my-2 bg-gray-200 p-2"
+            style={{ backgroundColor: "#e5e7eb", marginVertical: 8, padding: 8 }}
             placeholder="Name"
             onBlur={onBlur}
             onChangeText={onChange}
@@ -93,7 +93,7 @@ export const InfoForm = ({ fileName, videoSource }: { fileName: string; videoSou
         }}
         render={({ field: { onChange, onBlur, value } }) => (
           <TextInput
-            className="my-2 bg-gray-200 p-2"
+            style={{ marginVertical: 8, padding: 8, backgroundColor: "#e5e7eb" }}
             placeholder="Description"
             onBlur={onBlur}
             onChangeText={onChange}
@@ -106,7 +106,7 @@ export const InfoForm = ({ fileName, videoSource }: { fileName: string; videoSou
       {errors.description && <Text>This is required.</Text>}
 
       <Button title="Crop" onPress={handleSubmit(onSubmit)} />
-      <Text className="mt-2">Cropped file: {fileName}</Text>
+      <Text style={{ marginTop: 8 }}>Cropped file: {fileName}</Text>
     </View>
   );
 };

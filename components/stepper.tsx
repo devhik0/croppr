@@ -49,10 +49,10 @@ export const Stepper = () => {
         }}
         label="Find video"
       >
-        <View className="m-2 p-2">
-          <Text className="mb-4 text-center">Select a video to crop</Text>
+        <View style={{ margin: 8, padding: 8 }}>
+          <Text style={{ marginBottom: 16, textAlign: "center" }}>Select a video to crop</Text>
           <Button onPress={findVideos} title="Find" />
-          <Text className="mt-2">Selected file: {fileName}</Text>
+          <Text style={{ marginTop: 8 }}>Selected file: {fileName}</Text>
         </View>
       </ProgressStep>
       <ProgressStep
@@ -64,7 +64,7 @@ export const Stepper = () => {
         }}
         label="Crop video"
       >
-        <View className="items-center">
+        <View style={{ alignItems: "center" }}>
           <VideoPlayerComponent uri={videoSource as string} />
         </View>
       </ProgressStep>

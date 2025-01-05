@@ -7,7 +7,7 @@ export const VideoList = () => {
 
   return (
     <FlatList
-      className="mb-2"
+      style={{ marginBottom: 8 }}
       data={videos.toReversed()}
       renderItem={({ item }) => (
         <Link
@@ -17,7 +17,7 @@ export const VideoList = () => {
           }}
           asChild
         >
-          <Pressable className="my-1 bg-blue-200 p-2">
+          <Pressable style={{ marginVertical: 4, padding: 8, backgroundColor: "#bfdbfe" }}>
             <Text>
               {item.name} {item.description}
             </Text>
