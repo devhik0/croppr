@@ -1,4 +1,6 @@
+
+---
+- Optimize codebase <------ 
 - Fix lint and type errors
 - fix todos
-- Optimize (remove unused pkgs, extract components, edit code structure...)
-- Test apps in every aspect
+- Test app in every aspect
