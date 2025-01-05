@@ -1,6 +1,6 @@
 import { Link, useLocalSearchParams } from "expo-router";
 import { useVideoPlayer, VideoView } from "expo-video";
-import { SafeAreaView, StyleSheet, Text } from "react-native";
+import { SafeAreaView, Text } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
 export default function Details() {
@@ -16,7 +16,7 @@ export default function Details() {
         <Text>Test</Text>
         <Text>Clip details</Text>
         <Text>{name}</Text>
-        <VideoView style={styles.video} player={player} allowsFullscreen allowsPictureInPicture />
+        <VideoView style={{ width: 350, height: 275 }} player={player} allowsFullscreen allowsPictureInPicture />
         <Text>{description}</Text>
         <Link href={"/"} className="bg-blue-300">
           Go back
@@ -25,20 +25,3 @@ export default function Details() {
     </SafeAreaProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  contentContainer: {
-    flex: 1,
-    padding: 10,
-    alignItems: "center",
-    justifyContent: "center",
-    paddingHorizontal: 50,
-  },
-  video: {
-    width: 350,
-    height: 275,
-  },
-  controlsContainer: {
-    padding: 10,
-  },
-});

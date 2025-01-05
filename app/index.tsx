@@ -8,11 +8,11 @@ export default function Index() {
 
   return (
     <SafeAreaProvider>
-      <SafeAreaView className="flex-1">
-        <Text>Test</Text>
-        <Text>Here is your current clips</Text>
-
+      <SafeAreaView className="m-3 flex-1">
+        <Text className="mb-2 text-lg">Here is your current clips</Text>
+        <Text className="mb-2 text-sm">Pick a clip to see its details</Text>
         <FlatList
+          className="mb-2"
           data={videos.toReversed()}
           renderItem={({ item }) => (
             <Link
@@ -22,7 +22,7 @@ export default function Index() {
               }}
               asChild
             >
-              <Pressable className="m-1 bg-blue-200 p-1">
+              <Pressable className="my-1 bg-blue-200 p-2">
                 <Text>
                   {item.name} {item.description}
                 </Text>
@@ -30,7 +30,7 @@ export default function Index() {
             </Link>
           )}
         />
-        <Text>Or find a video to crop</Text>
+        <Text className="mb-2">Or find a video to crop</Text>
         <Link href={"/crop-modal"} asChild>
           <Button title="Find" />
         </Link>

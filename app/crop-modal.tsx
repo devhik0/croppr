@@ -50,11 +50,11 @@ export default function CropModal() {
             FFmpegKit.executeAsync(`-y -i ${cacheDirectory}output-${file?.assets?.[0].name}.mp4 -c:v mpeg4 ${safUrl}`);
           });
         });
-        Alert.alert("Info", "Clip success");
+        Alert.alert("Info", "Clip created successfully");
       } else if (ReturnCode.isCancel(returnCode)) {
-        Alert.alert("Warn", "Clip cancelled");
+        Alert.alert("Warn", "Clip creation cancelled");
       } else {
-        Alert.alert("Error", "Clip failed");
+        Alert.alert("Error", "Clip creation failed");
       }
     });
   };
@@ -96,32 +96,77 @@ export default function CropModal() {
     router.push("/");
   };
 
+  // bg-blue-400
+  const themeColor = "#3b82f6";
+  const textColor = "#ffffffdd";
+
+  const progressSteps = {
+    borderWidth: 3,
+    activeStepIconBorderColor: themeColor,
+    completedProgressBarColor: themeColor,
+    activeStepIconColor: themeColor,
+    activeLabelColor: themeColor,
+    completedStepNumColor: themeColor,
+    completedStepIconColor: themeColor,
+    activeStepNumColor: textColor,
+  };
+
   return (
     <SafeAreaView className="flex-1">
       {/* stepper */}
-
-      <ProgressSteps>
-        <ProgressStep label="Find video">
+      <ProgressSteps {...progressSteps}>
+        <ProgressStep
+          nextBtnTextStyle={{
+            color: "#393939",
+          }}
+          previousBtnTextStyle={{
+            color: "#393939",
+          }}
+          label="Find video"
+        >
           <View className="m-2 p-2">
-            <Text>Select a video to crop</Text>
+            <Text className="mb-4 text-center">Select a video to crop</Text>
             <Button onPress={findVideos} title="Find" />
-            <Text>{file?.assets?.[0].name}</Text>
+            <Text className="mt-2">Selected file: {file?.assets?.[0].name}</Text>
           </View>
         </ProgressStep>
-        <ProgressStep label="Crop video">
-          <View style={{ alignItems: "center" }}>
+        <ProgressStep
+          nextBtnTextStyle={{
+            color: "#393939",
+          }}
+          previousBtnTextStyle={{
+            color: "#393939",
+          }}
+          label="Crop video"
+        >
+          <View className="items-center">
             <VideoView style={{ width: 350, height: 275 }} player={player} allowsFullscreen allowsPictureInPicture />
           </View>
         </ProgressStep>
-        <ProgressStep label="Add information" onSubmit={onSubmitSteps}>
-          <View className="mb-2">
+        <ProgressStep
+          nextBtnTextStyle={{
+            color: "#393939",
+          }}
+          previousBtnTextStyle={{
+            color: "#393939",
+          }}
+          label="Add information"
+          onSubmit={onSubmitSteps}
+        >
+          <View className="mb-2 p-2">
             <Controller
               control={control}
               rules={{
                 required: true,
               }}
               render={({ field: { onChange, onBlur, value } }) => (
-                <TextInput placeholder="Name" onBlur={onBlur} onChangeText={onChange} value={value} />
+                <TextInput
+                  className="my-2 bg-gray-200 p-2"
+                  placeholder="Name"
+                  onBlur={onBlur}
+                  onChangeText={onChange}
+                  value={value}
+                />
               )}
               name="name"
             />
@@ -132,21 +177,24 @@ export default function CropModal() {
                 required: true,
               }}
               render={({ field: { onChange, onBlur, value } }) => (
-                <TextInput placeholder="Description" onBlur={onBlur} onChangeText={onChange} value={value} multiline />
+                <TextInput
+                  className="my-2 bg-gray-200 p-2"
+                  placeholder="Description"
+                  onBlur={onBlur}
+                  onChangeText={onChange}
+                  value={value}
+                  multiline
+                />
               )}
               name="description"
             />
             {errors.description && <Text>This is required.</Text>}
 
             <Button title="Crop" onPress={handleSubmit(onSubmit)} />
-            <Text>{file?.assets?.[0].name}</Text>
+            <Text className="mt-2">Cropped file: {file?.assets?.[0].name}</Text>
           </View>
         </ProgressStep>
       </ProgressSteps>
-
-      {/* <Link href={"/"} className="mt-2 bg-blue-400">
-        Back
-      </Link> */}
     </SafeAreaView>
   );
 }
