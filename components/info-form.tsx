@@ -14,24 +14,24 @@ type FormValues = {
 
 export const InfoForm = ({ fileName, videoSource }: { fileName: string; videoSource: string }) => {
   const cropVideos = async () => {
-    FFmpegKit.execute(
-      `-y -i ${videoSource} -ss 00:00:05 -to 00:00:10 -c copy ${cacheDirectory}output-${fileName}.mp4`
-    ).then(async (session) => {
-      const returnCode = await session.getReturnCode();
+    FFmpegKit.execute(`-y -i ${videoSource} -ss 00:00:05 -to 00:00:10 ${cacheDirectory}output-${fileName}.mp4`).then(
+      async (session) => {
+        const returnCode = await session.getReturnCode();
 
-      if (ReturnCode.isSuccess(returnCode)) {
-        FFmpegKitConfig.selectDocumentForWrite(videoSource, "video/*").then((uri) => {
-          FFmpegKitConfig.getSafParameterForWrite(uri).then((safUrl) => {
-            FFmpegKit.executeAsync(`-y -i ${cacheDirectory}output-${fileName}.mp4 -c:v mpeg4 ${safUrl}`);
+        if (ReturnCode.isSuccess(returnCode)) {
+          FFmpegKitConfig.selectDocumentForWrite(videoSource, "video/*").then((uri) => {
+            FFmpegKitConfig.getSafParameterForWrite(uri).then((safUrl) => {
+              FFmpegKit.executeAsync(`-y -i ${cacheDirectory}output-${fileName}.mp4 -c:v mpeg4 ${safUrl}`);
+            });
           });
-        });
-        Alert.alert("Info", "Clip created successfully");
-      } else if (ReturnCode.isCancel(returnCode)) {
-        Alert.alert("Warn", "Clip creation cancelled");
-      } else {
-        Alert.alert("Error", "Clip creation failed");
+          Alert.alert("Info", "Clip created successfully");
+        } else if (ReturnCode.isCancel(returnCode)) {
+          Alert.alert("Warn", "Clip creation cancelled");
+        } else {
+          Alert.alert("Error", "Clip creation failed");
+        }
       }
-    });
+    );
   };
 
   const schema = yup
