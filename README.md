@@ -16,7 +16,7 @@ Warning: Only works for android, not developed for ios because of there was no i
     npm run android
    ```
 
-3. Select a platform from CLI (better to use a real device because it has access to files in device.)   
+3. Select Android from CLI (press a) (better to use a real device because it has access to files in device.)   
 
    - Make sure that you have followed this guide before using app: 
    [Local build](https://docs.expo.dev/get-started/set-up-your-environment/?mode=development-build&buildEnv=local)
