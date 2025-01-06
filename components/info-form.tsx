@@ -21,7 +21,7 @@ export const InfoForm = ({ fileName, videoSource }: { fileName: string; videoSou
         if (ReturnCode.isSuccess(returnCode)) {
           FFmpegKitConfig.selectDocumentForWrite(videoSource, "video/*").then((uri) => {
             FFmpegKitConfig.getSafParameterForWrite(uri).then((safUrl) => {
-              FFmpegKit.executeAsync(`-y -i ${cacheDirectory}output-${fileName}.mp4 -c:v mpeg4 ${safUrl}`);
+              FFmpegKit.executeAsync(`-y -i ${cacheDirectory}output-${fileName} -c:v mpeg4 ${safUrl}`);
             });
           });
           Alert.alert("Info", "Clip created successfully");
