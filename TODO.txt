@@ -1,6 +1,3 @@
 
 ---
-- Optimize codebase <------ 
-- Fix lint and type errors
-- fix todos
-- Test app in every aspect
+- Test app in every aspect <---

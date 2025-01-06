@@ -14,7 +14,7 @@ type FormValues = {
 
 export const InfoForm = ({ fileName, videoSource }: { fileName: string; videoSource: string }) => {
   const cropVideos = async () => {
-    FFmpegKit.execute(`-y -i ${videoSource} -ss 00:00:05 -to 00:00:10 ${cacheDirectory}output-${fileName}.mp4`).then(
+    FFmpegKit.execute(`-y -i ${videoSource} -ss 00:00:05 -to 00:00:10 ${cacheDirectory}output-${fileName}`).then(
       async (session) => {
         const returnCode = await session.getReturnCode();
 
